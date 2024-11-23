@@ -22,7 +22,7 @@ namespace Scripts.BehaviourTree.ActionNodes
 
             FindFood();
 
-            state = State.RUNNING;
+            //state = State.RUNNING;
         }
 
         private void GoToPosition(Vector3 pos)
@@ -46,6 +46,8 @@ namespace Scripts.BehaviourTree.ActionNodes
 
         protected override State OnUpdate()
         {
+            if(state == State.FALIURE) return State.FALIURE; 
+
             if (blackboard.transform.position != destinantion)
             { 
                 blackboard.transform.position = Vector3.MoveTowards(blackboard.transform.position, destinantion, speed * Time.deltaTime);
@@ -93,6 +95,7 @@ namespace Scripts.BehaviourTree.ActionNodes
             {
                 foodPile = GetClosestFoodPile(foodPiles);
                 GoToPosition(foodPile.transform.position);
+                state = State.RUNNING;
             }
         }
 
