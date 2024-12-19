@@ -70,11 +70,11 @@ namespace Scripts.UI
             ClosePanel();
         }
 
-        private void ChooseBuildding(Buildings building)
+        private void ChooseBuildding(Enums.Buildings building)
         {
             switch (building)
             {
-                case Buildings.FOOD_MAKER:
+                case Enums.Buildings.FOOD_MAKER:
                     buildLogic.StartBuilding(foodMaker);
                     break;
                 default:
@@ -87,7 +87,7 @@ namespace Scripts.UI
 
         public void ChooseFoodMaker()
         {
-            ChooseBuildding(Buildings.FOOD_MAKER);
+            ChooseBuildding(Enums.Buildings.FOOD_MAKER);
         }
 
 

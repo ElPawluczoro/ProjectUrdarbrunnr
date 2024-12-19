@@ -11,7 +11,7 @@ namespace Scripts.BehaviourTree.ActionNodes
     internal class LookForFood : ActionNode
     {
         private Vector3 destinantion;
-        [SerializeField] private float speed = 1;
+        //[SerializeField] private float speed = 1;
         [SerializeField] private float eatCooldown = 1;
         private float timeScienceEat;
         private FoodPile foodPile;
@@ -50,7 +50,8 @@ namespace Scripts.BehaviourTree.ActionNodes
 
             if (blackboard.transform.position != destinantion)
             { 
-                blackboard.transform.position = Vector3.MoveTowards(blackboard.transform.position, destinantion, speed * Time.deltaTime);
+                blackboard.transform.position = 
+                    Vector3.MoveTowards(blackboard.transform.position, destinantion, blackboard.characterStatus.Speed * Time.deltaTime);
                 return state;
             }
             

@@ -11,7 +11,6 @@ namespace Scripts.BehaviourTree.ActionNodes
     {
         public float x;
         public float y;
-        public float speed;
 
         private Vector3 destinantion;
 
@@ -37,7 +36,8 @@ namespace Scripts.BehaviourTree.ActionNodes
 
         protected override State OnUpdate()
         {
-            blackboard.transform.position = Vector3.MoveTowards(blackboard.transform.position, destinantion, speed * Time.deltaTime);
+            blackboard.transform.position = 
+                Vector3.MoveTowards(blackboard.transform.position, destinantion, blackboard.characterStatus.Speed * Time.deltaTime);
             if(blackboard.transform.position == destinantion)
             {
                 return State.SUCCESS;

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6231023467293631461}
   - component: {fileID: 8487787961216990786}
   - component: {fileID: 3142806212927460548}
+  - component: {fileID: -8934125036128285664}
   m_Layer: 0
   m_Name: FoodMaker
   m_TagString: Untagged
@@ -130,3 +131,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.1580812, y: 0.17662793}
   m_EdgeRadius: 0
+--- !u!114 &-8934125036128285664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657509498996621501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce3d1c8cf8f28614d82c3c39c25197c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAssignee: 1
+  workers: []

@@ -45,16 +45,22 @@ namespace Scripts.Build
             currentlyBuildingObject.GetComponent<BoxCollider2D>().isTrigger = true;
             currentlyBuildingObject.AddComponent<CollisonDetector>();
             currentlyBuildingObject.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-            currentlyBuildingObject.GetComponent<SpriteRenderer>().color = Color.green;
+            SpriteRenderer spriteRenderer = currentlyBuildingObject.GetComponent<SpriteRenderer>();
+            spriteRenderer.color = Color.green;
+            spriteRenderer.sortingOrder = 75;
+
+
         }
 
         public void PlaceBuilding()
         {
-            currentlyBuildingObject.GetComponent<SpriteRenderer>().color = Color.white;
+            SpriteRenderer spriteRenderer = currentlyBuildingObject.GetComponent<SpriteRenderer>();
+            spriteRenderer.color = Color.white;
             currentlyBuildingObject.GetComponent<BoxCollider2D>().isTrigger = false;
             Destroy(currentlyBuildingObject.GetComponent<CollisonDetector>());
             Destroy(currentlyBuildingObject.GetComponent<Rigidbody2D>());
             currentlyBuildingObject = null;
+            spriteRenderer.sortingOrder = 50;
         }
 
         public void CancelBuilding()
