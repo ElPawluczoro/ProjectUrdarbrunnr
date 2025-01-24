@@ -1,5 +1,6 @@
 ﻿using Scripts.BehaviourTree;
 using Scripts.Characters;
+using Scripts.Player;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,31 @@ namespace Scripts.Buildings
         [SerializeField] protected int maxAssignee = 1;
 
         [SerializeField] protected List<CharacterStatus> workers = new List<CharacterStatus>();
+
+        protected MaterialsManager materialsManager;
+
+        protected int workProgress = 0;
+        protected int workMaxProgress = 5;
+
+        protected float workStartTime = 0;
+        protected float workTime = 1f;
+
+        [SerializeField] private int woodCost;
+        [SerializeField] private int plankCost;
+
+        public int WoodCost => woodCost;
+        public int PlankCost => plankCost;
+        public int MaxAssigne => maxAssignee;
+
+        public int GetWorkersCount()
+        {
+            return workers.Count;
+        }
+
+        protected virtual void Start()
+        {
+            materialsManager = FindObjectOfType<MaterialsManager>();
+        }
 
         public virtual void AssignWorker(CharacterStatus character)
         {
@@ -37,5 +63,7 @@ namespace Scripts.Buildings
         }
 
         public abstract Node.State Work(Blackboard blackboard);
+
+        public abstract void OnPlace();
     }
 }

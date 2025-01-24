@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using Scripts.BehaviourTree.ActionNodes;
+using Scripts.BehaviourTree.CommonBehaviour;
+using Scripts.WorldObjects;
+using UnityEngine;
 using Blackboard = Scripts.BehaviourTree.Blackboard;
 using Node = Scripts.BehaviourTree.Node;
 
@@ -6,32 +9,91 @@ namespace Scripts.Buildings
 {
     public class Foodmaker : Workplace
     {
+        [SerializeField] private GameObject foodCrate;
+
+        private int crates = 0;
+        private int maxCrates = 3;
+
+        private GameObject leftCrate;
+        private GameObject middleCrate;
+        private GameObject rightCrate;
+
+        private bool spent;
+
         public override Node.State Work(Blackboard blackboard)
         {
-            var destinantion = this.transform.position;
-            if (!(Vector3.Distance(blackboard.transform.position, transform.position) <= 1))
+            if (crates == maxCrates) return Node.State.FALIURE;
+            if (!spent)
             {
-                if (blackboard.transform.position.x < destinantion.x)
-                {
-                    blackboard.transform.rotation = new Quaternion(0, 0, 0, 0);
-                }
-                else
-                {
-                    blackboard.transform.rotation = new Quaternion(0, 180, 0, 0);
-                }
+                if (!materialsManager.RemoveMaterialIfIsEnough(1, Player.Materials.FOOD)) return Node.State.FALIURE;
+                else spent = true;
+            }
 
-                blackboard.animator.SetBool("Walking", true);
+            var destination = this.transform.position;
 
-                blackboard.transform.position = 
-                    Vector3.MoveTowards(blackboard.transform.position, destinantion, blackboard.characterStatus.Speed * Time.deltaTime);
+            if(CommonBehaviour.GoToPosition(destination, blackboard) == Node.State.RUNNING)
+            {
                 return Node.State.RUNNING;
             }
 
             blackboard.animator.SetBool("Walking", false);
+            if(workStartTime == 0)
+            {
+                workStartTime = Time.time;
+            }
 
-            return Node.State.SUCCESS;
+            if (Time.time - workStartTime > workTime)
+            {
+                workProgress += 1;
+                workStartTime = Time.time;
 
+                if (workProgress >= workMaxProgress)
+                {
+                    workProgress = 0;
+                    workStartTime = 0;
 
+                    var newFoodCrate = Instantiate(foodCrate);
+
+                    float x = 0;
+                    if (middleCrate == null) 
+                    {
+                        x = 0;
+                        middleCrate = newFoodCrate;
+                    }
+                    else if(leftCrate == null)
+                    {
+                        x = -0.5f;
+                        leftCrate = newFoodCrate;
+                    }
+                    else if(rightCrate == null)
+                    {
+                        x = 0.5f;
+                        rightCrate = newFoodCrate;
+                    }
+
+                    newFoodCrate.transform.position = transform.position + new Vector3(x, -0.5f, 0);
+                    newFoodCrate.GetComponent<FoodPile>().SetFoodMaker(this);
+                    crates++;
+                    spent = false;
+
+                    return Node.State.SUCCESS;
+                }
+
+                return Node.State.RUNNING;
+            }
+
+            return Node.State.RUNNING;
+
+        }
+
+        public override void OnPlace()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void ReduceCrates()
+        {
+            crates--;
         }
     }
 }

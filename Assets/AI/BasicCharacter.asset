@@ -50,7 +50,6 @@ MonoBehaviour:
   children:
   - {fileID: 6917423695700190424}
   - {fileID: 3752336199078231226}
-  - {fileID: 2481330029360328306}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,7 +69,6 @@ MonoBehaviour:
   - {fileID: 6892082911860362909}
   - {fileID: 6917423695700190424}
   - {fileID: -1119719834314678309}
-  - {fileID: 2481330029360328306}
   - {fileID: -1073005025029786423}
   - {fileID: 3752336199078231226}
   blackboard:
@@ -79,32 +77,6 @@ MonoBehaviour:
     transform: {fileID: 0}
     animator: {fileID: 0}
     characterStatus: {fileID: 0}
---- !u!114 &2481330029360328306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eda57ef8ddf61343bdda19bac9270f4, type: 3}
-  m_Name: GoToPosition
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 898b6cb0f55b999489a60f519284dd3e
-  position: {x: 446, y: 422}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-    moveToObject: {fileID: 0}
-    transform: {fileID: 0}
-    animator: {fileID: 0}
-    characterStatus: {fileID: 0}
-  description: 
-  x: 0
-  y: 0
-  speed: 1
 --- !u!114 &3676326392007231870
 MonoBehaviour:
   m_ObjectHideFlags: 0

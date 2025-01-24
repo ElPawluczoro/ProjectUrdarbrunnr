@@ -8,6 +8,8 @@ namespace Scripts.Enums
 {
     public enum Buildings
     {
-        FOOD_MAKER
+        FOOD_MAKER,
+        WOODCUTTER,
+        FOOD_COLLECTOR
     }
 }

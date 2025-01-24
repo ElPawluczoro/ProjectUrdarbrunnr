@@ -1,4 +1,8 @@
-﻿using System; 
+﻿using Scripts.Buildings;
+using Scripts.Controllers;
+using Scripts.Player;
+using System;
+using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 
 namespace Scripts.Build
@@ -6,6 +10,16 @@ namespace Scripts.Build
     public class BuildLogic : MonoBehaviour
     {
         private GameObject currentlyBuildingObject;
+
+        private MaterialsManager materialsManager;
+
+        private WorkerAssigner assigner;
+
+        private void Start()
+        {
+            materialsManager = FindObjectOfType<MaterialsManager>();
+            assigner = FindObjectOfType<WorkerAssigner>();
+        }
 
         private void Update()
         {
@@ -48,17 +62,34 @@ namespace Scripts.Build
             SpriteRenderer spriteRenderer = currentlyBuildingObject.GetComponent<SpriteRenderer>();
             spriteRenderer.color = Color.green;
             spriteRenderer.sortingOrder = 75;
-
-
         }
 
         public void PlaceBuilding()
         {
+            Materials material = Materials.WOOD;
+            int cost = 0;
+
+            int woodCost = currentlyBuildingObject.GetComponent<Workplace>().WoodCost;
+            int plankCost = currentlyBuildingObject.GetComponent<Workplace>().PlankCost;
+            if (woodCost > 0)
+            {
+                material = Materials.WOOD;
+                cost = woodCost;
+            }
+            else if (plankCost > 0)
+            {
+                material = Materials.PLANK;
+                cost = plankCost;
+            }
+
+            if (!materialsManager.RemoveMaterialIfIsEnough(cost, material)) return;
             SpriteRenderer spriteRenderer = currentlyBuildingObject.GetComponent<SpriteRenderer>();
             spriteRenderer.color = Color.white;
             currentlyBuildingObject.GetComponent<BoxCollider2D>().isTrigger = false;
             Destroy(currentlyBuildingObject.GetComponent<CollisonDetector>());
             Destroy(currentlyBuildingObject.GetComponent<Rigidbody2D>());
+            assigner.AddWorkplace(currentlyBuildingObject.GetComponent<Workplace>());
+            currentlyBuildingObject.GetComponent<Workplace>().OnPlace();
             currentlyBuildingObject = null;
             spriteRenderer.sortingOrder = 50;
         }

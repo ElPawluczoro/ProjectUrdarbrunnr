@@ -1,4 +1,5 @@
 ﻿using Scripts.Build;
+using Scripts.Controllers;
 using Scripts.Enums;
 using System;
 using Unity.Burst.CompilerServices;
@@ -11,6 +12,8 @@ namespace Scripts.UI
         [SerializeField] private GameObject buildPanel;
 
         [SerializeField] private GameObject foodMaker;
+        [SerializeField] private GameObject woodcutter;
+        [SerializeField] private GameObject foodcollector;
 
         private Camera mainCamera;
 
@@ -18,11 +21,14 @@ namespace Scripts.UI
 
         private BuildLogic buildLogic;
 
+        private CharactersManager characterManager;
+
 
         private void Start()
         {
             mainCamera = Camera.main;
             buildLogic = FindObjectOfType<BuildLogic>();
+            characterManager = FindObjectOfType<CharactersManager>();
         }
 
         private void Update()
@@ -77,6 +83,12 @@ namespace Scripts.UI
                 case Enums.Buildings.FOOD_MAKER:
                     buildLogic.StartBuilding(foodMaker);
                     break;
+                case Enums.Buildings.WOODCUTTER:
+                    buildLogic.StartBuilding(woodcutter);
+                    break;
+                case Enums.Buildings.FOOD_COLLECTOR:
+                    buildLogic.StartBuilding(foodcollector);
+                    break;
                 default:
                     Debug.LogWarning($"Building: {building} not found");
                     break;
@@ -90,6 +102,20 @@ namespace Scripts.UI
             ChooseBuildding(Enums.Buildings.FOOD_MAKER);
         }
 
+        public void ChooseWoodcutter()
+        {
+            ChooseBuildding(Enums.Buildings.WOODCUTTER);
+        }
+
+        public void ChooseFoodCollector()
+        {
+            ChooseBuildding(Enums.Buildings.FOOD_COLLECTOR);
+        }
+
+        public void AddCharacter()
+        {
+            characterManager.AddCharacter();
+        }
 
     }
-    }
+}

@@ -29,7 +29,7 @@ namespace Scripts.BehaviourTree.CompositeNodes
                     return State.RUNNING;
                 case State.FALIURE:
                     current++;
-                    return State.RUNNING;
+                    break;
                 case State.SUCCESS:
                     current++;
                     break;
